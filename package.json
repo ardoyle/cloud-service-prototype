@@ -1,0 +1,22 @@
+{
+  "name": "cloud-services-prototype",
+  "description": "A test project to get used to node.  Will have an endpoint to add new cloud formation templates to  mongo, as well as an endpoint to create a new ec2 instance, and yet another to get a status on that instance.",
+  "version": "0.0.1",
+  "author": "ADoyle",
+  "main": "src/main.js",
+  "dependencies": {
+	  "restify": "2.8.1",
+	  "mongoose": "3.8.10",
+	  "bunyan": "0.22.3"
+  },
+  "devDependencies": {
+	  "mocha": "1.19.0",
+	  "mockgoose": "1.10.0"
+  },
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+	  "test-coverage": "istanbul cover node_modules/mocha/bin/_mocha"
+  }
+}
