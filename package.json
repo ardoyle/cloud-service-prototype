@@ -5,18 +5,20 @@
   "author": "ADoyle",
   "main": "src/main.js",
   "dependencies": {
-	  "restify": "2.8.1",
-	  "mongoose": "3.8.10",
-	  "bunyan": "0.22.3"
+    "restify": "2.8.1",
+    "mongoose": "3.8.10",
+    "bunyan": "0.22.3"
   },
   "devDependencies": {
-	  "mocha": "1.19.0",
-	  "mockgoose": "1.10.0"
+    "mocha": "1.19.0",
+    "mockgoose": "1.10.0",
+    "sinon": "^1.10.0",
+    "supertest": "^0.13.0"
   },
   "engines": {
     "node": "0.10.x"
   },
   "scripts": {
-	  "test-coverage": "istanbul cover node_modules/mocha/bin/_mocha"
+    "test-coverage": "istanbul cover node_modules/mocha/bin/_mocha"
   }
 }

@@ -7,7 +7,7 @@ var restify = require('restify');
 
 var NAME = 'test-cloud-services';
 
-var controllers = require('./controller');
+var server = require('./server');
 
 // In true UNIX fashion, debug messages go to stderr, and audit records go
 // to stdout, so you can split them as you like in the shell
@@ -55,7 +55,7 @@ var LOG = bunyan.createLogger({
 //        }
 //    }
 
-    var server = controllers.createServer({
+    var server = server.createServer({
         log: LOG
     });
 
