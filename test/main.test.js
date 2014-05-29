@@ -143,3 +143,31 @@ describe('DELETE /templates', function() {
 			.expect(500, done);
 	});
 });
+
+
+//----------------------------------------------
+//----  todo api test
+//----------------------------------------------
+var nock = require('nock');
+var todo_nock = nock('http://jsonplaceholder.typicode.com')
+	.get('/todos')
+	.reply(200, [{
+		username: 'pgte',
+		email: 'pedro.teixeira@gmail.com'
+	}]);
+
+describe('GET /todos gets nocked', function() {
+	it('should return the custom json i set up in nock', function(done) {
+		request(server)
+			.get('/todos')
+			.expect('Content-Type', /json/)
+			.end(function(err, res) {
+				assert.equal(res.body[0].username, 'pgte');
+				done();
+			});
+	});
+});
+
+describe('GET /todos should handle error', function() {
+	
+});

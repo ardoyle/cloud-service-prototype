@@ -13,6 +13,7 @@ mongoose.connect('mongodb://localhost:27017/templates');
 
 // controllers
 var templatesController = require('./controller/templates_controller');
+var todoController = require('./controller/todo_controller');
 
 /**
  * gather endpoints from the exports of each controller,
@@ -73,6 +74,7 @@ function createServer(options) {
 
     // add routes from controllers
     templatesController.addRoutes(server);
+    todoController.addRoutes(server);
 
 //    // Register a default '/' handler
 //
