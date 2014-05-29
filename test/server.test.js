@@ -16,11 +16,11 @@ var templates_controller = rek('templates_controller');
 
 describe('server', function() {
 	describe('#createServer', function() {
-		before(function() {
+		beforeEach(function() {
 			sinon.spy(restify, 'createServer');
 			sinon.spy(templates_controller, 'addRoutes');
 		});
-		after(function() {
+		afterEach(function() {
 			restify.createServer.restore();
 			templates_controller.addRoutes.restore();
 		});
@@ -31,6 +31,11 @@ describe('server', function() {
 			assert.equal("test-cloud-services", restify.createServer.getCall(0).args[0].name);
 			
 			assert.ok(templates_controller.addRoutes.calledOnce);
-		})
+		});
+		it('should cover the if else path of the noAudit logger', function() {
+			var restifyServer = server.createServer({noAudit: true});
+			
+			assert.ok(restify.createServer.calledOnce);
+		});
 	})
 })
