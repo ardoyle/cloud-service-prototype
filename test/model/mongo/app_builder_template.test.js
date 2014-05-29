@@ -4,6 +4,8 @@
 var mongoose = require('mongoose');
 var mockgoose = require('mockgoose');
 var assert = require('assert');
+var sinon = require('sinon');
+var util = require('util');
 
 var rek = require('rekuire');
 var AppBuilderTemplate = rek('app_builder_template');
@@ -41,7 +43,6 @@ describe('app_builder_template', function() {
 	describe('#updateTemplate', function() {
 		it('should update the existing template', function() {
 			AppBuilderTemplate.updateTemplate({name: 'test-template-1', description: 'new description', version: 'version1'}, function(err, savedTemplate, numRowsAffected) {
-				if (err) { console.log(err); }
 				assert.equal(savedTemplate.name, 'test-template-1');
 				assert.equal(savedTemplate.description, 'new description');
 			});
@@ -52,10 +53,45 @@ describe('app_builder_template', function() {
 			});
 		});
 	});
+	describe('#updateTemplate throws Error', function() {
+		var stub;
+		before(function() {
+			stub = sinon.stub(AppBuilderTemplate, 'findOne');
+			stub.callsArgWith(1, new Error(), {});
+		});
+		after(function() {
+			stub.restore();
+		});
+		it('findOne should throw and error and get handled by updateTemplate', function() {
+			AppBuilderTemplate.updateTemplate({}, function(err, savedTemplate, numRowsAffected) {
+				assert.notEqual(null, err);
+			});
+		});
+	});
 	describe('#deleteTemplate', function() {
 		it('should delete the existing template', function() {
 			AppBuilderTemplate.deleteTemplate({name: 'test-template-1', version: 'version1'}, function(err) {
 				assert.equal(err, null);
+			});
+		});
+		it('should do nothing because the template does not exist', function() {
+			AppBuilderTemplate.deleteTemplate({name: 'xxxx', version: 'xxxx'}, function(err) {
+				assert.equal(err, null);
+			});
+		});
+	});
+	describe('#deleteTemplate throws Error', function() {
+		var stub;
+		before(function() {
+			stub = sinon.stub(AppBuilderTemplate, 'findOne');
+			stub.callsArgWith(1, new Error(), null);
+		});
+		after(function() {
+			stub.restore();
+		});
+		it('findOne should throw and error and get handled by deleteTemplate', function() {
+			AppBuilderTemplate.deleteTemplate({name: 'test-template-1', version: 'version1'}, function(err) {
+				assert.notStrictEqual(err, null);
 			});
 		});
 	});

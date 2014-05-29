@@ -7,11 +7,13 @@ var mockgoose = require('mockgoose');
 var request = require('supertest');
 var assert = require('assert');
 var restify = require('restify');
+var sinon = require('sinon');
 
 mockgoose(mongoose);
 
 var rek = require('rekuire');
-var server = require('../src/server').createServer({});
+var server = rek('server').createServer({});
+var AppBuilderTemplate = rek('app_builder_template');
 
 
 
@@ -68,5 +70,76 @@ describe('DELETE /templates', function() {
 			.set('Content-Type', 'application/json')
 			.expect('Content-Type', /json/)
 			.expect(200, done);
+	});
+});
+
+///////////////////
+// handling errors
+///////////////////
+
+describe('GET /templates?n=1&v=1', function() {
+	var stub;
+	before(function() {
+		stub = sinon.stub(AppBuilderTemplate, "getTemplateByNameAndVersion");
+		stub.callsArgWith(2, new Error(), {});
+	});
+	after(function() {
+		stub.restore();
+	});
+	it('should throw an exception when getting templates and return 500', function(done) {
+		request(server)
+			.get('/templates?name=1&v=1')
+			.expect(500, done);
+	});
+});
+
+describe('POST /templates', function() {
+	var stub;
+	before(function() {
+		stub = sinon.stub(AppBuilderTemplate, "insertTemplate");
+		stub.callsArgWith(1, new Error(), {});
+	});
+	after(function() {
+		stub.restore();
+	});
+	it('should throw an exception when posting templates and return 500', function(done) {
+		request(server)
+			.post('/templates')
+			.send({name: "test"})
+			.expect(500, done);
+	});
+});
+
+describe('PUT /templates', function() {
+	var stub;
+	before(function() {
+		stub = sinon.stub(AppBuilderTemplate, "updateTemplate");
+		stub.callsArgWith(1, new Error(), {});
+	});
+	after(function() {
+		stub.restore();
+	});
+	it('should throw an exception when putting templates and return 500', function(done) {
+		request(server)
+			.put('/templates')
+			.send({name: 'test1'})
+			.expect(500, done);
+	});
+});
+
+describe('DELETE /templates', function() {
+	var stub;
+	before(function() {
+		stub = sinon.stub(AppBuilderTemplate, "deleteTemplate");
+		stub.callsArgWith(1, new Error());
+	});
+	after(function() {
+		stub.restore();
+	});
+	it('should throw and excpetion when deleting template and return 500', function(done) {
+		request(server)
+			.del('/templates')
+			.send({name: 'test1'})
+			.expect(500, done);
 	});
 });
