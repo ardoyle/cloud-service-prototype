@@ -15,7 +15,7 @@ var LOG = bunyan.createLogger({
     name: NAME,
     streams: [
         {
-            level: (process.env.LOG_LEVEL || 'debug'),
+            level: (process.env.LOG_LEVEL || 'info'),
             stream: process.stdout
         },
         {
@@ -23,13 +23,13 @@ var LOG = bunyan.createLogger({
             // related to that request are spewed to stderr - makes it nice
             // filter out debug messages in prod, but still dump on user
             // errors so you can debug problems
-            level: 'debug',
+            level: 'warn',
             type: 'raw',
             stream: new restify.bunyan.RequestCaptureStream({
                 level: bunyan.DEBUG,
                 maxRecords: 100,
                 maxRequestIds: 1000,
-                stream: process.stdout
+                stream: process.stderr
             })
         }
     ],

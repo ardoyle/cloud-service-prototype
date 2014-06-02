@@ -99,7 +99,7 @@ function createServer(options) {
             log: bunyan.createLogger({
                 level: 'debug',
                 name: 'cloudservicesprototype-audit',
-                stream: process.stdout
+                stream: process.stderr
             })
         }));
     }

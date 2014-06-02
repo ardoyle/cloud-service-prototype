@@ -12,7 +12,7 @@ var sinon = require('sinon');
 mockgoose(mongoose);
 
 var rek = require('rekuire');
-var server = rek('server').createServer({});
+var server = rek('server').createServer({noAudit: true});
 var AppBuilderTemplate = rek('app_builder_template');
 
 

@@ -8,7 +8,7 @@ var restify = require('restify');
 var sinon = require('sinon');
 
 var rek = require('rekuire');
-var server = rek('server').createServer({});
+var server = rek('server').createServer({noAudit: true});
 
 //----------------------------------------------
 //----  todo api test

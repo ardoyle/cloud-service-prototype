@@ -13,7 +13,7 @@ var mockgoose = require('mockgoose');
 mockgoose(mongoose);
 
 var rek = require('rekuire');
-var server = rek('server').createServer({});
+var server = rek('server').createServer({noAudit: true});
 
 //----------------------------------------------
 //----  todo api test
