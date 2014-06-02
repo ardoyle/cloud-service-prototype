@@ -14,6 +14,7 @@ mongoose.connect('mongodb://localhost:27017/templates');
 // controllers
 var templatesController = require('./controller/templates_controller');
 var todoController = require('./controller/todo_controller');
+var awsEc2Controller = require('./controller/aws_ec2_controller');
 
 /**
  * gather endpoints from the exports of each controller,
@@ -75,6 +76,7 @@ function createServer(options) {
     // add routes from controllers
     templatesController.addRoutes(server);
     todoController.addRoutes(server);
+    awsEc2Controller.addRoutes(server);
 
 //    // Register a default '/' handler
 //

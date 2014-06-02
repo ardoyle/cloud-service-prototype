@@ -5,6 +5,7 @@
   "author": "ADoyle",
   "main": "src/main.js",
   "dependencies": {
+    "aws-sdk": "^2.0.0-rc.19",
     "bunyan": "0.22.3",
     "mongoose": "3.8.10",
     "nock": "^0.32.3",
